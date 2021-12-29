@@ -219,35 +219,20 @@ public abstract class ZoomableCanvas extends JComponent implements IScreenImageP
         }
     }
 
-    protected abstract void doDrawOnGraphicsWithDimension(Graphics g, Dimension d, AffineTransform scalingTransform) throws sun.dc.pr.PRException;
+    protected abstract void doDrawOnGraphicsWithDimension(Graphics g, Dimension d, AffineTransform scalingTransform);
 
     protected void drawOnGraphicsWithDimension(Graphics g, Dimension dimension, AffineTransform scalingTransform) {
-        try {
-
-
-            if (g instanceof Graphics2D) {
-                Graphics2D g2D = (Graphics2D) g;
-                Object oldAntiAlias = g2D.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-                try {
-                    g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, AntiAlias);
-                    doDrawOnGraphicsWithDimension(g, dimension, scalingTransform);
-                } finally {
-                    g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldAntiAlias);
-                }
-            } else {
+        if (g instanceof Graphics2D) {
+            Graphics2D g2D = (Graphics2D) g;
+            Object oldAntiAlias = g2D.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+            try {
+                g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, AntiAlias);
                 doDrawOnGraphicsWithDimension(g, dimension, scalingTransform);
+            } finally {
+                g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldAntiAlias);
             }
-
-        } catch (sun.dc.pr.PRError er) {
-            //do nothing
-            /**
-             * this code is here to handle bug in JDK
-             */
-        } catch (sun.dc.pr.PRException ex) {
-            //do nothing
-            /**
-             * this code is here to handle bug in JDK
-             */
+        } else {
+            doDrawOnGraphicsWithDimension(g, dimension, scalingTransform);
         }
     }
 

@@ -24,6 +24,7 @@ import conexp.frontend.ruleview.AbstractDependencySetCalculator;
 import conexp.frontend.ruleview.AssociationRuleCalculator;
 import conexp.frontend.ruleview.AttributeIncrementalImplicationCalculatorFactory;
 import conexp.frontend.ruleview.ImplicationBaseCalculator;
+import conexp.frontend.ruleview.LinCbOImplicationCalculatorFactory;
 import conexp.frontend.ruleview.ImplicationCalcStrategyFactory;
 import conexp.frontend.ruleview.NextClosedSetImplicationCalculatorFactory;
 import conexp.util.GenericStrategy;
@@ -333,6 +334,7 @@ public class ContextDocumentModel extends BasePropertyChangeSupplier {
 
     private static ImplicationCalcStrategyFactory[] getAvailableImplicationStrategiesFactory() {
         return new ImplicationCalcStrategyFactory[]{
+                LinCbOImplicationCalculatorFactory.getInstance(),
                 AttributeIncrementalImplicationCalculatorFactory.getInstance(),
                 NextClosedSetImplicationCalculatorFactory.getInstance()};
     }

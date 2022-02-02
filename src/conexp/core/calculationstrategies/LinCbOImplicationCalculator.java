@@ -90,10 +90,10 @@ public class LinCbOImplicationCalculator
         }
     }
 
-    private Tuple LinearClosureRC(Set closingAttributes, int lastAddedAttr, Set newAttributes, Map prevCount) {
-        ModifiableSet attributes = closingAttributes.makeModifiableSetCopy();
-        Map count = new HashMap(prevCount);
-        ModifiableSet z = newAttributes.makeModifiableSetCopy();
+    private Tuple LinearClosureRC(final Set closingAttributes, final int lastAddedAttr, Set newAttributes, final Map prevCount) {
+        final ModifiableSet attributes = closingAttributes.makeModifiableSetCopy();
+        final Map count = new HashMap(prevCount);
+        final ModifiableSet z = newAttributes.makeModifiableSetCopy();
         basis.forEach(new ImplicationSet.ImplicationProcessor() {
             public void processImplication(Implication implication) {
                 if (!prevCount.containsKey(implication)) {
@@ -111,8 +111,8 @@ public class LinCbOImplicationCalculator
                     if (fail) {
                         return;
                     }
-                    count.put(implication, (int)count.get(implication) - 1);
-                    if ((int)count.get(implication) == 0) {
+                    count.put(implication, (Integer)count.get(implication) - 1);
+                    if ((Integer)count.get(implication) == 0) {
                         ModifiableSet add = substractSets(implication.getConclusion(), attributes);
                         if (add.firstIn() < lastAddedAttr) {
                             fail = true;
@@ -196,8 +196,8 @@ public class LinCbOImplicationCalculator
     }
 
     private class Tuple { 
-        public ModifiableSet closure; 
-        public Map count;
+        public final ModifiableSet closure; 
+        public final Map count;
 
         public Tuple(ModifiableSet cl, Map cnt) {
             closure = cl;
